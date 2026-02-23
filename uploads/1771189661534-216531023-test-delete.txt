@@ -1,3 +1,0 @@
-This is a test document for deletion verification.
-It has multiple lines.
-To ensure multiple chunks might be created.
