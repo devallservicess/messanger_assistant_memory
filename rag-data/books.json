@@ -1,0 +1,65 @@
+[
+    {
+        "id": "1",
+        "title": "أحمد ومدينة الغيوم",
+        "summary": "Une aventure magique où Ahmed voyage dans le temps.",
+        "price": "48 dt",
+        "img": "images/ChatGPT Image 19 janv. 2026, 15_43_00.png"
+    },
+    {
+        "id": "2",
+        "title": "أحمد مع القراصنة",
+        "summary": "Ahmed vit une aventure intelligente avec des pirates.",
+        "price": "48 dt",
+        "img": "images/ChatGPT Image 19 janv. 2026, 14_49_42.png"
+    },
+    {
+        "id": "3",
+        "title": "أحمد وبلّورة الزمن",
+        "summary": "Ahmed voyage à travers différentes époques.",
+        "price": "48 dt",
+        "img": "images/Gemini_Generated_Image_mvht8kmvht8kmvht.png"
+    },
+    {
+        "id": "4",
+        "title": "أحمد مبرمج المستقبل",
+        "summary": "Ahmed apprend la programmation dès son enfance.",
+        "price": "48 dt",
+        "img": "images/Gemini_Generated_Image_akyuk8akyuk8akyu.png"
+    },
+    {
+        "id": "5",
+        "title": "أحمد الطبيب الصغير",
+        "summary": "Ahmed découvre le monde médical.",
+        "price": "48 dt",
+        "img": "images/Gemini_Generated_Image_2oz26e2oz26e2oz2.png"
+    },
+    {
+        "id": "6",
+        "title": "أحمد و كرة الأحلام",
+        "summary": "Ahmed poursuit son rêve de footballeur.",
+        "price": "48 dt",
+        "img": "images/Gemini_Generated_Image_3stgiw3stgiw3stg.png"
+    },
+    {
+        "id": "7",
+        "title": "ريم ومرآة الأمنيات",
+        "summary": "Une belle histoire sur la confiance en soi.",
+        "price": "48 dt",
+        "img": "images/Gemini_Generated_Image_bi8rq7bi8rq7bi8r.png"
+    },
+    {
+        "id": "8",
+        "title": "أحمد والروبوت الصغير",
+        "summary": "Ahmed apprend la robotique.",
+        "price": "48 dt",
+        "img": "images/Gemini_Generated_Image_9jvup39jvup39jvu.png"
+    },
+    {
+        "id": "9",
+        "title": "أحمد والعائلة بلا هواتف",
+        "summary": "Une journée sans écrans pleine de bonheur.",
+        "price": "48 dt",
+        "img": "images/Gemini_Generated_Image_omvl1somvl1somvl.png"
+    }
+]

@@ -37,6 +37,8 @@
     "redis": "^4.6.10"
   },
   "devDependencies": {
+    "axios": "^1.13.5",
+    "form-data": "^4.0.5",
     "nodemon": "^3.0.1"
   },
   "engines": {

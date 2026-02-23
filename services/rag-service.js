@@ -75,6 +75,37 @@ class SimpleVectorStore {
         this.embeddings = data.embeddings || [];
         this.metadata = data.metadata || [];
     }
+
+    // Delete documents by metadata key/value
+    deleteDocumentsByMetadata(key, value) {
+        const initialSize = this.documents.length;
+        const indicesKeep = [];
+
+        // Find indices to keep
+        for (let i = 0; i < this.metadata.length; i++) {
+            if (this.metadata[i][key] !== value) {
+                indicesKeep.push(i);
+            }
+        }
+
+        // Create new arrays
+        const newDocuments = [];
+        const newEmbeddings = [];
+        const newMetadata = [];
+
+        for (const idx of indicesKeep) {
+            newDocuments.push(this.documents[idx]);
+            newEmbeddings.push(this.embeddings[idx]);
+            newMetadata.push(this.metadata[idx]);
+        }
+
+        // Replace arrays
+        this.documents = newDocuments;
+        this.embeddings = newEmbeddings;
+        this.metadata = newMetadata;
+
+        return initialSize - this.documents.length;
+    }
 }
 
 // Global vector store instance
@@ -309,17 +340,33 @@ async function searchContext(query, k = 5) {
 
 // Get context string for AI prompt
 async function getContextForQuery(query) {
-    const results = await searchContext(query, 5);
+    const totalDocs = vectorStore.size;
+
+    if (totalDocs === 0) {
+        return '';
+    }
+
+    // For small datasets (≤50 docs), include ALL documents as context
+    // This ensures the AI always has full product knowledge
+    if (totalDocs <= 50) {
+        const allTexts = vectorStore.documents;
+        return `\n\nINFORMATIONS DU MAGASIN (données actuelles - ${totalDocs} produits):\n${allTexts.join('\n')}`;
+    }
+
+    // For larger datasets, use semantic search
+    const results = await searchContext(query, 10);
 
     if (results.length === 0) {
         return '';
     }
 
-    // Filter by relevance score (threshold)
-    const relevant = results.filter(r => r.score > 0.1);
+    // Use a very low threshold to avoid filtering out cross-language matches
+    const relevant = results.filter(r => r.score > 0.01);
 
     if (relevant.length === 0) {
-        return '';
+        // Fallback: return top results even with low scores
+        const contextParts = results.slice(0, 5).map(r => r.text);
+        return `\n\nINFORMATIONS DU MAGASIN (données actuelles):\n${contextParts.join('\n')}`;
     }
 
     const contextParts = relevant.map(r => r.text);
@@ -339,11 +386,16 @@ function deleteDataSource(sourceId) {
     }
 
     const source = dataSources[idx];
-    dataSources.splice(idx, 1);
 
-    // Clear and rebuild vector store (simple approach)
-    // In production, you'd want to track which documents belong to which source
-    // For now, we'll need to re-process all remaining files
+    // Remove documents from vector store
+    // The metadata 'source' field contains the original filename
+    if (source.name) {
+        const deletedCount = vectorStore.deleteDocumentsByMetadata('source', source.name);
+        console.log(`[RAG] Deleted ${deletedCount} documents for source: ${source.name}`);
+    }
+
+    // Remove from data sources list
+    dataSources.splice(idx, 1);
 
     persistData();
     return true;
